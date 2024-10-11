@@ -1,0 +1,12 @@
+.addClient {
+  display: flex;
+  gap: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  h2 {
+    margin: 0;
+  }
+}
+.clients {
+  padding: 20px;
+}
