@@ -11,6 +11,36 @@ const SidebarMenuMain = () => {
         title={"Главная"}
         fontIcon="bi-app-indicator"
       />
+
+      {/* Course */}
+      <SidebarMenuItemWithSub
+        to="/dashboard"
+        title="Course"
+        icon="profile-circle"
+        fontIcon="bi-person"
+      >
+        <SidebarMenuItem
+          to="/dashboard/arrange-course"
+          title="Arrange Course"
+          hasBullet={true}
+        />
+        <SidebarMenuItem
+          to="/dashboard/manage-registrations"
+          title="Manage Registrations"
+          hasBullet={true}
+        />
+        <SidebarMenuItem
+          to="/dashboard/manage-courses"
+          title="Manage Courses"
+          hasBullet={true}
+        />
+            <SidebarMenuItem
+          to="/dashboard/course-structure"
+          title="Course Structure"
+          hasBullet={true}
+        />
+      </SidebarMenuItemWithSub>
+
       {/* Клиенты */}
       <SidebarMenuItemWithSub
         to="/dashboard/clients"
@@ -69,9 +99,6 @@ const SidebarMenuMain = () => {
           hasBullet={true}
         />
       </SidebarMenuItemWithSub>
-
-
-  
     </>
   );
 };

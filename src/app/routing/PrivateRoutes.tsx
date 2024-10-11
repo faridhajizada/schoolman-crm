@@ -5,6 +5,7 @@ import { DashboardWrapper } from "../pages/dashboard/DashboardWrapper";
 
 const ClientsPage = lazy(() => import("./../pages/clients/Clients.jsx"));
 const DevicesPage = lazy(() => import("../pages/devices/Devices.jsx"));
+const ArrangeCoursePage = lazy(() => import("./../pages/courseDashboard/ArrangeCourse/ArrangeCourse.jsx"));
 
 const PrivateRoutes = () => {
   return (
@@ -13,6 +14,7 @@ const PrivateRoutes = () => {
         <Route path="dashboard" element={<DashboardWrapper />} />
         <Route path="dashboard/clients" element={<ClientsPage />} />
         <Route path="dashboard/devices" element={<DevicesPage />} />
+        <Route path="dashboard/arrange-course" element={<ArrangeCoursePage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Routes>
