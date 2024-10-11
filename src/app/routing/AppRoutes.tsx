@@ -7,21 +7,21 @@ import { App } from "../App";
 import Login from "../pages/Login/Login";
 
 const AppRoutes: FC = () => {
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState(true);
 
-  useEffect(() => {
-    const checkToken = () => {
-      const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const checkToken = () => {
+  //     const token = localStorage.getItem("token");
 
-      if (token) {
-        setCurrentUser(true);
-      } else {
-        setCurrentUser(false);
-      }
-    };
+  //     if (token) {
+  //       setCurrentUser(true);
+  //     } else {
+  //       setCurrentUser(false);
+  //     }
+  //   };
 
-    checkToken();
-  }, []);
+  //   checkToken();
+  // }, []);
 
   return (
     <BrowserRouter>
