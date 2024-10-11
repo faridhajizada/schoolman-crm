@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 import "./ArrangeCourse.scss";
 
 const data = [
   {
     id: 1,
-    gname: "[01.January.2025]FQ-ACCA-DipIFR-903",
+    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
     courseLevel: "DipIFR",
     language: "Azerbaijani",
     startDate: "1/1/2025	",
@@ -37,7 +38,7 @@ const data = [
   },
   {
     id: 2,
-    gname: "[06.December.2024]FQ-ACCA-FR-931",
+    name: "[06.December.2024]FQ-ACCA-FR-931",
     courseLevel: "Financial Reporting",
     language: "Azerbaijani",
     startDate: "12/6/2024",
@@ -70,7 +71,7 @@ const data = [
   },
   {
     id: 3,
-    gname: "[01.January.2025]FQ-ACCA-DipIFR-903",
+    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
     courseLevel: "DipIFR",
     language: "Azerbaijani",
     startDate: "1/1/2025	",
@@ -103,7 +104,7 @@ const data = [
   },
   {
     id: 4,
-    gname: "[06.December.2024]FQ-ACCA-FR-931",
+    name: "[06.December.2024]FQ-ACCA-FR-931",
     courseLevel: "Financial Reporting",
     language: "Azerbaijani",
     startDate: "12/6/2024",
@@ -136,7 +137,7 @@ const data = [
   },
   {
     id: 5,
-    gname: "[01.January.2025]FQ-ACCA-DipIFR-903",
+    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
     courseLevel: "DipIFR",
     language: "Azerbaijani",
     startDate: "1/1/2025	",
@@ -169,7 +170,7 @@ const data = [
   },
   {
     id: 6,
-    gname: "[06.December.2024]FQ-ACCA-FR-931",
+    name: "[06.December.2024]FQ-ACCA-FR-931",
     courseLevel: "Financial Reporting",
     language: "Azerbaijani",
     startDate: "12/6/2024",
@@ -203,7 +204,7 @@ const data = [
 
   {
     id: 7,
-    gname: "[01.January.2025]FQ-ACCA-DipIFR-903",
+    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
     courseLevel: "DipIFR",
     language: "Azerbaijani",
     startDate: "1/1/2025	",
@@ -236,7 +237,7 @@ const data = [
   },
   {
     id: 8,
-    gname: "[06.December.2024]FQ-ACCA-FR-931",
+    name: "[06.December.2024]FQ-ACCA-FR-931",
     courseLevel: "Financial Reporting",
     language: "Azerbaijani",
     startDate: "12/6/2024",
@@ -269,7 +270,7 @@ const data = [
   },
   {
     id: 9,
-    gname: "[01.January.2025]FQ-ACCA-DipIFR-903",
+    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
     courseLevel: "DipIFR",
     language: "Azerbaijani",
     startDate: "1/1/2025	",
@@ -302,7 +303,7 @@ const data = [
   },
   {
     id: 10,
-    gname: "[06.December.2024]FQ-ACCA-FR-931",
+    name: "[06.December.2024]FQ-ACCA-FR-931",
     courseLevel: "Financial Reporting",
     language: "Azerbaijani",
     startDate: "12/6/2024",
@@ -335,7 +336,7 @@ const data = [
   },
   {
     id: 11,
-    gname: "[01.January.2025]FQ-ACCA-DipIFR-903",
+    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
     courseLevel: "DipIFR",
     language: "Azerbaijani",
     startDate: "1/1/2025	",
@@ -368,7 +369,7 @@ const data = [
   },
   {
     id: 12,
-    gname: "[06.December.2024]FQ-ACCA-FR-931",
+    name: "[06.December.2024]FQ-ACCA-FR-931",
     courseLevel: "Financial Reporting",
     language: "Azerbaijani",
     startDate: "12/6/2024",
@@ -402,13 +403,34 @@ const data = [
 ];
 
 function ArrangeCourse() {
+  const [createCourseModal, setCreateCourseModal] = useState(false);
+  const [newCourse, setNewCourse] = useState({
+    name: " ",
+  });
+
+  const openCreateCourseModal = () => {
+    setCreateCourseModal(true);
+  };
+  const closeCreateDeviceModal = () => {
+    setCreateCourseModal(false);
+  };
+
+  const handleCourse = (e) => {
+    e.preventDefault();
+    console.log(newDevice);
+  };
+
   return (
     <>
       <section className="ArrangeCourse">
         <div className="card card-flush p-4">
           <div className="card-header px-0 align-items-center">
             <h3 className="card-title">Arrange Course</h3>
-            <a href="#" className="btn btn-success">
+            <a
+              href="#"
+              className="btn btn-success"
+              onClick={openCreateCourseModal}
+            >
               Add Course
             </a>
           </div>
@@ -418,7 +440,7 @@ function ArrangeCourse() {
                 <thead>
                   <tr className="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th>Id</th>
-                    <th>Gname</th>
+                    <th>Name</th>
                     <th>Course Level</th>
                     <th>Language</th>
                     <th>Start item</th>
@@ -455,7 +477,7 @@ function ArrangeCourse() {
                     return (
                       <tr key={item.id}>
                         <td className="bg-secondary">{item.id}</td>
-                        <td>{item.gname}</td>
+                        <td>{item.name}</td>
                         <td className="text-center text-info">
                           {item.courseLevel}
                         </td>
@@ -503,6 +525,31 @@ function ArrangeCourse() {
             </div>
           </div>
         </div>
+
+        <Modal show={createCourseModal} onHide={closeCreateDeviceModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create Course </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handleCourse}>
+              <Form.Group controlId="formNewCourseLevel">
+                <Form.Label> Name</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={newCourse.level}
+                  onChange={(e) =>
+                    setNewCourse({ ...newCourse, level: e.target.value })
+                  }
+                >
+                  <option value="">Выберите уровень</option>
+                  <option value="beginner">Начальный</option>
+                  <option value="intermediate">Средний</option>
+                  <option value="advanced">Продвинутый</option>
+                </Form.Control>
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+        </Modal>
       </section>
       ;
     </>
