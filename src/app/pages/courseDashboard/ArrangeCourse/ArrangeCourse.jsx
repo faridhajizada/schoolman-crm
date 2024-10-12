@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Form } from "react-bootstrap";
+import { useCourseQuery } from "./../../../api/courseApi.js";
 import "./ArrangeCourse.scss";
 
 const data = [
@@ -403,6 +404,9 @@ const data = [
 ];
 
 function ArrangeCourse() {
+  const { data: CourseName } = useCourseQuery();
+  console.log(CourseName);
+
   const [createCourseModal, setCreateCourseModal] = useState(false);
   const [newCourse, setNewCourse] = useState({
     name: " ",
@@ -532,19 +536,19 @@ function ArrangeCourse() {
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={handleCourse}>
-              <Form.Group controlId="formNewCourseLevel">
+              <Form.Group controlId="formNewCourseName">
                 <Form.Label> Name</Form.Label>
                 <Form.Control
                   as="select"
-                  value={newCourse.level}
+                  value={newCourse.name}
                   onChange={(e) =>
-                    setNewCourse({ ...newCourse, level: e.target.value })
+                    setNewCourse({ ...newCourse, name: e.target.value })
                   }
                 >
-                  <option value="">Выберите уровень</option>
-                  <option value="beginner">Начальный</option>
-                  <option value="intermediate">Средний</option>
-                  <option value="advanced">Продвинутый</option>
+                  <option >Выберите уровень</option>
+                  {CourseName?.map((item) => {
+                    return <option key={item.id} value={item.courseName}>{item.courseName}</option>;
+                  })}
                 </Form.Control>
               </Form.Group>
             </Form>
