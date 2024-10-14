@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Modal, Form } from "react-bootstrap";
-import { useCourseQuery } from "./../../../api/courseApi.js";
+import {
+  useCourseQuery,
+  useQualificationQuery,
+} from "./../../../api/courseApi.js";
 import "./ArrangeCourse.scss";
 
 const data = [
@@ -405,11 +408,13 @@ const data = [
 
 function ArrangeCourse() {
   const { data: CourseName } = useCourseQuery();
-  console.log(CourseName);
+  const { data: Qualification } = useQualificationQuery();
+  console.log(Qualification);
 
   const [createCourseModal, setCreateCourseModal] = useState(false);
   const [newCourse, setNewCourse] = useState({
-    name: " ",
+    CourseName: "",
+    QualificationName: "",
   });
 
   const openCreateCourseModal = () => {
@@ -537,17 +542,41 @@ function ArrangeCourse() {
           <Modal.Body>
             <Form onSubmit={handleCourse}>
               <Form.Group controlId="formNewCourseName">
-                <Form.Label> Name</Form.Label>
+                <Form.Label> Course Name</Form.Label>
                 <Form.Control
                   as="select"
-                  value={newCourse.name}
+                  value={newCourse.CourseName}
                   onChange={(e) =>
-                    setNewCourse({ ...newCourse, name: e.target.value })
+                    setNewCourse({ ...newCourse, CourseName: e.target.value })
                   }
                 >
-                  <option >Выберите уровень</option>
+                  <option>Choose variant</option>
                   {CourseName?.map((item) => {
-                    return <option key={item.id} value={item.courseName}>{item.courseName}</option>;
+                    return (
+                      <option key={item.id} value={item.courseName}>
+                        {item.courseName}
+                      </option>
+                    );
+                  })}
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId="formNewQualification">
+                <Form.Label> Qualification</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={newCourse.QualificationName}
+                  onChange={(e) =>
+                    setNewCourse({ ...newCourse, QualificationName: e.target.value })
+                  }
+                >
+                  <option>Choose variant</option>
+                  {Qualification?.map((item) => {
+                    return (
+                      <option key={item.id} value={item.prefix}>
+                        {item.prefix}
+                      </option>
+                    );
                   })}
                 </Form.Control>
               </Form.Group>

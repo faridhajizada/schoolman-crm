@@ -7,7 +7,16 @@ export const courseApi = baseQuery.injectEndpoints({
       query: () => ({
         url: `/course`,
         headers: {
-          // Accept: "text/plain",
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }),
+      providesTags: ["Course"],
+    }),
+    qualification: builder.query({
+      query: () => ({
+        url: `/Qualification`,
+        headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -18,4 +27,4 @@ export const courseApi = baseQuery.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useCourseQuery } = courseApi;
+export const { useCourseQuery, useQualificationQuery } = courseApi;
