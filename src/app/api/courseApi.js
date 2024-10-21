@@ -23,8 +23,20 @@ export const courseApi = baseQuery.injectEndpoints({
       }),
       providesTags: ["Course"],
     }),
+
+    courseList: builder.query({
+      query: ({pageNumber, pageSize}) => ({
+        url: `/Group?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }),
+      providesTags: ["Course"],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useCourseQuery, useQualificationQuery } = courseApi;
+export const { useCourseQuery, useQualificationQuery, useCourseListQuery } =
+  courseApi;

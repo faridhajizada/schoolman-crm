@@ -24,6 +24,8 @@ function Devices() {
     is_available: true,
   });
 
+  console.log(data);
+
   const [filters, setFilters] = useState({
     title: "",
     quantityFrom: "",

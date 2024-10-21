@@ -1,415 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Form } from "react-bootstrap";
 import {
   useCourseQuery,
   useQualificationQuery,
+  useCourseListQuery,
 } from "./../../../api/courseApi.js";
 import "./ArrangeCourse.scss";
 
-const data = [
-  {
-    id: 1,
-    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
-    courseLevel: "DipIFR",
-    language: "Azerbaijani",
-    startDate: "1/1/2025	",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Elnur Əliyev",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 2,
-    name: "[06.December.2024]FQ-ACCA-FR-931",
-    courseLevel: "Financial Reporting",
-    language: "Azerbaijani",
-    startDate: "12/6/2024",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Jamal Alishov",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 3,
-    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
-    courseLevel: "DipIFR",
-    language: "Azerbaijani",
-    startDate: "1/1/2025	",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Elnur Əliyev",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 4,
-    name: "[06.December.2024]FQ-ACCA-FR-931",
-    courseLevel: "Financial Reporting",
-    language: "Azerbaijani",
-    startDate: "12/6/2024",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Jamal Alishov",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 5,
-    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
-    courseLevel: "DipIFR",
-    language: "Azerbaijani",
-    startDate: "1/1/2025	",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Elnur Əliyev",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 6,
-    name: "[06.December.2024]FQ-ACCA-FR-931",
-    courseLevel: "Financial Reporting",
-    language: "Azerbaijani",
-    startDate: "12/6/2024",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Jamal Alishov",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-
-  {
-    id: 7,
-    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
-    courseLevel: "DipIFR",
-    language: "Azerbaijani",
-    startDate: "1/1/2025	",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Elnur Əliyev",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 8,
-    name: "[06.December.2024]FQ-ACCA-FR-931",
-    courseLevel: "Financial Reporting",
-    language: "Azerbaijani",
-    startDate: "12/6/2024",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Jamal Alishov",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 9,
-    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
-    courseLevel: "DipIFR",
-    language: "Azerbaijani",
-    startDate: "1/1/2025	",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Elnur Əliyev",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 10,
-    name: "[06.December.2024]FQ-ACCA-FR-931",
-    courseLevel: "Financial Reporting",
-    language: "Azerbaijani",
-    startDate: "12/6/2024",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Jamal Alishov",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 11,
-    name: "[01.January.2025]FQ-ACCA-DipIFR-903",
-    courseLevel: "DipIFR",
-    language: "Azerbaijani",
-    startDate: "1/1/2025	",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Elnur Əliyev",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-  {
-    id: 12,
-    name: "[06.December.2024]FQ-ACCA-FR-931",
-    courseLevel: "Financial Reporting",
-    language: "Azerbaijani",
-    startDate: "12/6/2024",
-    endDate: "6/1/2025	",
-    country: "Azerbaijani",
-    duration: "132",
-    classDuration: "2",
-    capacity: "15",
-    tutor1: "Jamal Alishov",
-    freeMorning: "1100",
-    freeEvening: "0",
-    week1: "Monday",
-    startTimeOfWeek1: "7:00 AM	",
-    endTimeOfWeek1: "9:00 AM	",
-    week2: "Thursday",
-    startTimeOfWeek2: "7:00 AM	",
-    endTimeOfWeek2: "9:00 AM	",
-    week3: "week3",
-    startTimeOfWeek3: "startTimeOfWeek3",
-    endTimeOfWeek3: "endTimeOfWeek3",
-    week4: "week4",
-    startTimeOfWeek4: "startTimeOfWeek4",
-    endTimeOfWeek4: "endTimeOfWeek4",
-    week5: "week5",
-    startTimeOfWeek5: "startTimeOfWeek5",
-    endTimeOfWeek5: "endTimeOfWeek5",
-    week6: "week6",
-    startTimeOfWeek6: "startTimeOfWeek6",
-    endTimeOfWeek6: "endTimeOfWeek6",
-  },
-];
-
 function ArrangeCourse() {
-  const { data: CourseName } = useCourseQuery();
-  const { data: Qualification } = useQualificationQuery();
-  console.log(Qualification);
+  const { data: CourseName } = useCourseQuery(null);
+  const { data: Qualification } = useQualificationQuery(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState("10");
+  const { data: CourseList } = useCourseListQuery({ pageNumber, pageSize });
+
+  const handleChangeSelectShowPageSize = (event) => {
+    setPageSize(event.target.value);
+  };
+
+  console.log(CourseList);
 
   const [createCourseModal, setCreateCourseModal] = useState(false);
   const [newCourse, setNewCourse] = useState({
@@ -426,7 +35,7 @@ function ArrangeCourse() {
 
   const handleCourse = (e) => {
     e.preventDefault();
-    console.log(newDevice);
+    console.log(newCourse);
   };
 
   return (
@@ -482,32 +91,32 @@ function ArrangeCourse() {
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 fw-semibold">
-                  {data?.map((item) => {
+                  {CourseList?.map((item) => {
                     return (
                       <tr key={item.id}>
                         <td className="bg-secondary">{item.id}</td>
-                        <td>{item.name}</td>
+                        <td>{item.gname}</td>
                         <td className="text-center text-info">
                           {item.courseLevel}
                         </td>
                         <td>{item.language}</td>
                         <td className=" text-center text-success">
-                          {item.startDate}
+                          {item.startDate.slice(0, 10)}
                         </td>
                         <td className=" text-center text-danger">
-                          {item.endDate}
+                          {item.endDate.slice(0, 10)}
                         </td>
                         <td>{item.country}</td>
                         <td className="text-center text-warning">
                           {item.duration}
                         </td>
-                        <td>{item.classDuration}</td>
+                        <td>{item.classduration}</td>
                         <td>{item.capacity}</td>
                         <td className="text-center text-primary">
                           {item.tutor1}
                         </td>
-                        <td>{item.freeMorning}</td>
-                        <td>{item.freeEvening}</td>
+                        <td>{item.feemorning}</td>
+                        <td>{item.feeevening}</td>
                         <td>{item.week1}</td>
                         <td>{item.startTimeOfWeek1}</td>
                         <td>{item.endTimeOfWeek1}</td>
@@ -547,14 +156,14 @@ function ArrangeCourse() {
                   as="select"
                   value={newCourse.CourseName}
                   onChange={(e) =>
-                    setNewCourse({ ...newCourse, CourseName: e.target.value })
+                    setNewCourse({ ...newCourse, courseName: e.target.value })
                   }
                 >
                   <option>Choose variant</option>
                   {CourseName?.map((item) => {
                     return (
-                      <option key={item.id} value={item.courseName}>
-                        {item.courseName}
+                      <option key={item.id} value={item?.courseName}>
+                        {item?.courseName}
                       </option>
                     );
                   })}
@@ -567,14 +176,17 @@ function ArrangeCourse() {
                   as="select"
                   value={newCourse.QualificationName}
                   onChange={(e) =>
-                    setNewCourse({ ...newCourse, QualificationName: e.target.value })
+                    setNewCourse({
+                      ...newCourse,
+                      QualificationName: e.target.value,
+                    })
                   }
                 >
                   <option>Choose variant</option>
                   {Qualification?.map((item) => {
                     return (
-                      <option key={item.id} value={item.prefix}>
-                        {item.prefix}
+                      <option key={item.id} value={item?.qualificationName}>
+                        {item?.qualificationName}
                       </option>
                     );
                   })}
@@ -583,6 +195,55 @@ function ArrangeCourse() {
             </Form>
           </Modal.Body>
         </Modal>
+        <nav
+          aria-label="Page navigation "
+          className="d-flex justify-content-around mt-4"
+        >
+          <ul className="pagination">
+            <li className="page-item previous ">
+              <a
+                href="#"
+                className="page-link"
+                onClick={() =>
+                  setPageNumber(pageNumber - 1 ? pageNumber - 1 : 1)
+                }
+              >
+                <i className="previous"></i>
+              </a>
+            </li>
+            <li className="page-item">
+              <a href="#" className="page-link active">
+                {pageNumber}
+              </a>
+            </li>
+
+            <li className="page-item next">
+              <a
+                href="#"
+                className="page-link"
+                onClick={() => {
+                  setPageNumber(pageNumber + 1);
+                }}
+              >
+                <i className="next"></i>
+              </a>
+            </li>
+          </ul>
+
+          <div className="show-size">
+            <select
+              id="mySelect"
+              value={pageSize}
+              onChange={handleChangeSelectShowPageSize}
+              className="form-select form-select-solid "
+            >
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+        </nav>
       </section>
       ;
     </>
