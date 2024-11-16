@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import {
-  useCourseQuery,
   useQualificationQuery,
+  useCourseQuery,
+  useCourseLevelQuery,
   useCourseListQuery,
 } from "./../../../api/courseApi.js";
 import CourseTable from "./CourseTable";
@@ -10,8 +11,9 @@ import CourseModal from "./CourseModal";
 import "./ArrangeCourse.scss";
 
 function ArrangeCourse() {
-  const { data: CourseName } = useCourseQuery(null);
   const { data: Qualification } = useQualificationQuery(null);
+  const { data: CourseName } = useCourseQuery(null);
+  const { data: CourseLevel } = useCourseLevelQuery(null);
 
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -27,8 +29,9 @@ function ArrangeCourse() {
 
   const [createCourseModal, setCreateCourseModal] = useState(false);
   const [newCourse, setNewCourse] = useState({
-    CourseName: "",
     QualificationName: "",
+    CourseLevelName: "",
+    CourseName: "",
   });
 
   const openCreateCourseModal = () => setCreateCourseModal(true);
@@ -64,8 +67,9 @@ function ArrangeCourse() {
         handleClose={closeCreateDeviceModal}
         newCourse={newCourse}
         setNewCourse={setNewCourse}
-        CourseName={CourseName}
         Qualification={Qualification}
+        CourseName={CourseName}
+        CourseLevel={CourseLevel}
         handleSubmit={handleCourse}
       />
 

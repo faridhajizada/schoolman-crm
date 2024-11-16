@@ -45,8 +45,12 @@ const CourseTable = ({ courses }) => {
             <td>{item.gname}</td>
             <td className="text-center text-info">{item.courseLevel}</td>
             <td>{item.language}</td>
-            <td className="text-center text-success">{item.startDate.slice(0, 10)}</td>
-            <td className="text-center text-danger">{item.endDate.slice(0, 10)}</td>
+            <td className="text-center text-success">
+              {item.startDate?.slice(0, 10)}
+            </td>
+            <td className="text-center text-danger">
+              {item.endDate?.slice(0, 10)}
+            </td>
             <td>{item.country}</td>
             <td className="text-center text-warning">{item.duration}</td>
             <td>{item.classduration}</td>

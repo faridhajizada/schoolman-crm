@@ -3,16 +3,6 @@ import { baseQuery } from "./api";
 export const courseApi = baseQuery.injectEndpoints({
   tagTypes: ["Course"],
   endpoints: (builder) => ({
-    course: builder.query({
-      query: () => ({
-        url: `/course`,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }),
-      providesTags: ["Course"],
-    }),
     qualification: builder.query({
       query: () => ({
         url: `/Qualification`,
@@ -23,9 +13,29 @@ export const courseApi = baseQuery.injectEndpoints({
       }),
       providesTags: ["Course"],
     }),
+    course: builder.query({
+      query: (id) => ({
+        url: `/course`,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }),
+      providesTags: ["Course"],
+    }),
+    courseLevel: builder.query({
+      query: (id) => ({
+        url: `/CourseLevel`,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }),
+      providesTags: ["Course"],
+    }),
 
     courseList: builder.query({
-      query: ({pageNumber, pageSize}) => ({
+      query: ({ pageNumber, pageSize }) => ({
         url: `/Group?pageNumber=${pageNumber}&pageSize=${pageSize}`,
         headers: {
           Accept: "application/json",
@@ -38,5 +48,9 @@ export const courseApi = baseQuery.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useCourseQuery, useQualificationQuery, useCourseListQuery } =
-  courseApi;
+export const {
+  useQualificationQuery,
+  useCourseQuery,
+  useCourseLevelQuery,
+  useCourseListQuery,
+} = courseApi;
